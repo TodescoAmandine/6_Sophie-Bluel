@@ -28,9 +28,11 @@ async function getProjects() {
 }
 
 function afficherGallery() {
-    const arrayProjects = projects[0];
-/*     const arrayProjects = getProjects;
- */    arrayProjects.forEach((works) => {
+    for (let i = 0; i < projects.length; i++) {
+        const arrayProjects = projects[i];
+        /*     const arrayProjects = getProjects;
+        /*  */
+        /*arrayProjects.forEach((works) => {*/
         const figure = document.createElement("figure");
         galleryElem.appendChild(figure);
 
@@ -41,8 +43,21 @@ function afficherGallery() {
         const figCaption = document.createElement("figCaption");
         figCaption.textContent = works[i].title;
         figure.appenChild(figCaption);
-    });
+    };
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //RECUPERATION DU SWAGGER POUR FILTRE
 async function getCategorie() {
@@ -50,6 +65,28 @@ async function getCategorie() {
     const categories = await reponse.json();
     return categories;
 }
+
+
+// 2 pistes pour filtres:
+
+
+const btnsCategories = document.createElement("button");
+btnsCategories = getCategorie;
+btnsCategories.classList.add("button");
+btnsCategories.appendChild("gallery");
+
+btnsCategories.addEventListener("click", => {
+    const categoriesFiltrees = categories.id(categories){
+    return categories.id = 1;
+}
+})
+
+
+
+
+
+
+
 //INITIALISATONS
 let activeStep = 0;
 let arrayCategories = categories.length - 1;
