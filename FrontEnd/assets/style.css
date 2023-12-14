@@ -223,26 +223,45 @@ li:hover {
 	margin-bottom: 1em;
 }
 
-button {
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	border: solid 1px #1D6154;
-	background-color: #1D6154;
-	margin: 2em auto;
-	width: 180px;
-	text-align: center;
-	border-radius: 60px;
+.filter_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	margin: 40px;
+
+	/* ajouter flex et gap pour center les filtres */
 }
 
-button:hover {
-	font-family: 'Syne';
+.filter_container .button {
+	height: 37px;
+	color: #1D6154;
+	font-family: Syne;
+	font-size: 16px;
+	font-style: normal;
 	font-weight: 700;
-	color: white;
+	line-height: normal;
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+	background-color: white;
+	width: fit-content;
+	cursor: pointer;
+	padding: 7px 20px 10px 20px;
+	transition: 0.3s;
+}
+
+.filter_container .button:hover,
+.filter_container .button.active {
+
+
 	background-color: #1D6154;
-	margin: 2em auto;
-	width: 180px;
-	text-align: center;
+	height: 37px;
+	color: white;
+	font-family: Syne;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
 	border-radius: 60px;
 }
 
@@ -305,6 +324,28 @@ input[type="submit"] {
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
+	transition: 0.3s;
+}
+
+input:hover[type="submit"] {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #0E2F28;
+	margin: 2em auto;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
+}
+
+a {
+	display: flex;
+	justify-content: center;
+	color: #3D3D3D;
+	font: inherit;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16.42px;
 }
 
 footer nav ul {

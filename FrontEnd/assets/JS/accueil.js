@@ -1,23 +1,25 @@
+/* import { loginListenerEnvoyer } from "./login.js";
+ */
 
-
-//RECUPERATION DU DOM 
+//RECUPERATION DU DOM
 const galleryElem = document.querySelector(".gallery");
+const portfolioElem = document.querySelector("#portfolio");
+
 
 
 //FONCTION main
 //RECUPERE LES PROJETS
-//FILTRES
-//GERER LA MODIFICATION
+
 function main() {
     getProjects().then((projects) => {
         afficherGallery(projects);
-        createCategories();
-        listeCategories();
     });
-};
 
-
-
+    getCategories().then((categories) => {
+        afficherCategories(categories)
+    });
+    loginForm()
+}
 
 
 //RECUPERATION DES DONNEES DEPUIS SWAGGER
@@ -27,96 +29,74 @@ async function getProjects() {
     return projects;
 }
 
-function afficherGallery() {
+function afficherGallery(projects, filter) {
+    if (filter !== undefined && filter !== 'Tous') {
+        projects = projects.filter((project) => project.category.name === filter)
+    }
+
+    galleryElem.innerHTML = '';
+
     for (let i = 0; i < projects.length; i++) {
-        const arrayProjects = projects[i];
-        /*     const arrayProjects = getProjects;
-        /*  */
-        /*arrayProjects.forEach((works) => {*/
         const figure = document.createElement("figure");
         galleryElem.appendChild(figure);
 
         const img = document.createElement("img");
-        img.src = works[i].imageUrl;
-        figure.appenChild(img);
+        img.src = projects[i].imageUrl;
+        figure.appendChild(img);
 
         const figCaption = document.createElement("figCaption");
-        figCaption.textContent = works[i].title;
-        figure.appenChild(figCaption);
-    };
+        figCaption.textContent = projects[i].title;
+        figure.appendChild(figCaption);
+    }
 }
 
 
+//FILTRES//RECUPERATION DU SWAGGER POUR FILTRE
 
-
-
-
-
-
-
-
-
-
-
-
-//RECUPERATION DU SWAGGER POUR FILTRE
-async function getCategorie() {
+async function getCategories() {
     const reponse = await fetch('http://localhost:5678/api/categories');
     const categories = await reponse.json();
     return categories;
 }
 
+function afficherCategories(categories) {
+    const filterContainer = document.createElement('div');
+    filterContainer.classList.add('filter_container');
+    portfolioElem.insertBefore(filterContainer, galleryElem);
 
-// 2 pistes pour filtres:
+    const allElement = {
+        'id': 0,
+        'name': 'Tous'
+    }
 
+    // Unshift = ajouter l'élément au début du tableau/objet
+    categories.unshift(allElement)
 
-const btnsCategories = document.createElement("button");
-btnsCategories = getCategorie;
-btnsCategories.classList.add("button");
-btnsCategories.appendChild("gallery");
+    categories.forEach((category, key) => {
+        let filter = document.createElement('button');
+        filter.classList.add('button');
 
-btnsCategories.addEventListener("click", => {
-    const categoriesFiltrees = categories.id(categories){
-    return categories.id = 1;
-}
-})
+        if (key === 0) {
+            filter.classList.add('active');
+        }
+        filter.innerHTML = category.name
 
+        filter.addEventListener('click', () => {
+            /*     if (key !== 0) { */
 
-
-
-
-
-
-//INITIALISATONS
-let activeStep = 0;
-let arrayCategories = categories.length - 1;
-/* let categoryId = categories(categorie.id) */
-
-//JE CREE LES BUTTONS
-function createCategories() {
-    let categoriesButton = document.querySelector('.gallery');
-    categoriesButton.forEach((categories, key) => {
-        let gallery = document.createElement('button');
-        button.classList.add('button');
-        button.textContent = categories.name
-        gallery.appendChild(button);
+            filter.classList.remove('active');
+            filterGallery(category.name);
+            /*       } */
+        });
+        filterContainer.appendChild(filter);
     })
 }
-//JE METS LES ELEMENTS DANS UNE LISTE POUR ENSUITE LES TRIER PAR CATEGORIE: ID ET AJOUTE UN EVENEMENT AU CLIC
-function listeCategories() {
-    activeStep++;
-    for (let i = 0; i < arrayCategories.length; i++) {
-        categoriesButton.addEventListener('click', (categories.id))
 
-
-    }
+function filterGallery(filter) {
+    getProjects().then((projects) => {
+        afficherGallery(projects, filter);
+    });
 }
-
-
-
-
-
-
 
 main();
 
