@@ -64,6 +64,8 @@ function afficherCategories(categories) {
     filterContainer.classList.add('filter_container');
     portfolioElem.insertBefore(filterContainer, galleryElem);
 
+
+    //VARIABLE POUR ELEMENT BOUTON TOUS
     const allElement = {
         'id': 0,
         'name': 'Tous'
@@ -82,11 +84,19 @@ function afficherCategories(categories) {
         filter.innerHTML = category.name
 
         filter.addEventListener('click', () => {
-            /*     if (key !== 0) { */
 
-            filter.classList.remove('active');
+            // Supprime la classe active de tous les boutons
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Ajoute la classe active au bouton actuellement cliqué
+            filter.classList.add('active');
+
+
             filterGallery(category.name);
-            /*       } */
+
         });
         filterContainer.appendChild(filter);
     })
