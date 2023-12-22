@@ -6,46 +6,52 @@ const form = document.getElementById("form");
 const messageError = document.getElementById("error");
 
 //ENVOI DES DONNEES A API
-const data = {
-    email: userEmail.value,
-    password: userPassword.value
-}
-const chargeUtile = JSON.stringify(data);
 
-async function postUser() {
+async function postUser(user) {
     return await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: chargeUtile,
+        body: user,
     }).then((res) => res.json())
 };
 //RECUPERATION DU TOKEN
 
 
-const userToken = {
-    user: `${userId}`,
-    token: `${token}`
-}
-
 function login() {
+    checkIfUserIsLog()
     form.addEventListener("submit", (e) => {
+        messageError.textContent = '';
         e.preventDefault();
-        if (data.email !== '' && data.password !== '') {
-            postUser.then((data) => {
-                if (response.ok) {
-                    const responseData = await response.json();
-                    token = responseData.token;
-                }
-                // TODO 
+        const data = {
+            email: userEmail.value,
+            password: userPassword.value
+        }
 
-                /*                 const valeurUserToken = JSON.stringify(userToken)
-                                window.localStorage.setItem("userToken", valeurUserToken)
-                
-                                console.log(token); */
+        if (data.email !== '' && data.password !== '') {
+            const chargeUtile = JSON.stringify(data);
+            postUser(chargeUtile).then((response) => {
+                if (response.token) {
+                    const valeurUserToken = JSON.stringify(response)
+                    window.localStorage.setItem("userToken", valeurUserToken)
+                    location.href = "index.html"
+                } else {
+                    messageError.textContent = "Utilisateur inconnu";
+                }
             })
+        } else if (data.email === '' && data.password !== '') {
+            messageError.textContent = "Merci de renseigner un email";
+        } else if (data.email !== '' && data.password === '') {
+            messageError.textContent = "Merci de renseigner un mot de pase";
         } else {
-            messageError.textContent = "Erreur dans l'identifiant ou le mot de passe";
+            messageError.textContent = "Données invalides";
         }
     })
+}
+
+function checkIfUserIsLog() {
+    if (window.localStorage.getItem('userToken') !== null) {
+        window.localStorage.removeItem('userToken');
+        messageError.textContent = 'Vous avez été déconnecté';
+    }
 }
 login();

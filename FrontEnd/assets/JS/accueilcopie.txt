@@ -30,8 +30,6 @@ const windowModal = document.querySelector(".editor__modal--window");
 const titleModal = document.querySelector(".editor__modal--title");
 
 const modalebtn = document.querySelector(".editor__modal--btn--modif");
-const btnAjout = document.getElementById("btn_ajout");
-
 
 
 
@@ -41,18 +39,15 @@ const btnAjout = document.getElementById("btn_ajout");
 
 function main() {
     getProjects().then((projects) => {
-        gestionGallery(projects);
-    });
-    getProjects().then((projects) => {
         afficherGallery(projects);
     });
 
     getCategories().then((categories) => {
-        afficherCategories(categories);
+        afficherCategories(categories)
     });
 
     if (window.localStorage.getItem('userToken') !== null) {
-        enableAdmin();
+        enableAdmin()
     }
 }
 
@@ -68,142 +63,10 @@ function enableAdmin() {
     btnModifier.classList.add("editor--btn--modifier--visible");
     inconeModifier.classList.remove("editor_icone--modifier");
     inconeModifier.classList.add("editor_icone--modifier--visible");
-    const filterCont = document.querySelector("filter_contenair.button");
-    console.log(filterCont);
-    /*     filterCont.classList.remove(".filter_contenair", "button")
-        filterCont.classList.add(".filter_container", "button--hidden"); */
-}
-
-/*************MODAL**************/
-let modal = null;
-const focusableSelector = 'button, a,input, textearea';
-let focusables = [];
-let previouslyFocusedElement = null;
 
 
-
-const openModal = function (e) {
-    e.preventDefault();
-    modal = document.querySelector(e.target.getAttribute("href"));
-    focusables = Array.from(modal.querySelectorAll(focusableSelector));
-    document.querySelector(':focus');
-    focusables[0].focus();
-    modal.style.display = null;
-    modal.removeAttribute("aria-hidden");
-    modal.setAttribute("aria-modal", "true");
-    modal.addEventListener("click", closeModal);
-    modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
-    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
-
-}
-
-const closeModal = function (e) {
-    if (modal === null) return;
-    if (previouslyFocusedElement !== null) previouslyFocusedElement.focus();
-    e.preventDefault();
-    window.setTimeout(function () {
-        /*       modal.style.display = "none"; */
-        modal = null;
-    }, 500);
-    modal.style.display = "none";
-    modal.setAttribute("aria-hidden", "true");
-    modal.removeAttribute("aria-modal", "true");
-    modal.removeEventListener("click", closeModal);
-    modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
-    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
-
-    modal = null;
-}
-
-///FONCTION pour garder l'evenement au clic : close uniquement sur le bouton et en dehors de la fenêtre
-const stopPropagation = function (e) {
-    e.stopPropagation();
-}
-//FONCTION pour mettre le focus sur le premier élément de la modal et aussi pour ne pas perdre les autres liens focusables quand on revient sur la page accueil
-const focusInModal = function (e) {
-    e.preventDefault();
-    let index = focusables.findIndex(f => f === modal.querySelector(":focus"));
-    if (e.shiftkey === true) {
-        index--;
-    } else {
-        index++;
-    }
-    if (index >= focusables.length) {
-        index = 0;
-    }
-    if (index < 0) {
-        index = focusables.length - 1;
-    }
-    focusables[index].focus();
-}
-
-document.querySelectorAll(".js-modal").forEach(a => {
-    a.addEventListener("click", openModal);
-
-});
-//CONTROLE AU CLAVIER > touche Escape et Tab
-window.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" || e.key === "Esc");
-    closeModal(e);
-    if (e.key === "Tab" && modal !== null) {
-        focusInModal(e);
-    }
-});
-
-//AJOUT DE GALERIE PHOTO DANS MODAL
-
-const modalGallery = document.querySelector(".modal_gallery");
-
-function gestionGallery(projects) {
-    modalGallery.innerHTML = '';
-
-    for (let i = 0; i < projects.length; i++) {
-        const figure = document.createElement("figure");
-        modalGallery.appendChild(figure);
-
-        const img = document.createElement("img");
-        img.src = projects[i].imageUrl;
-        figure.appendChild(img);
-
-        /*         const greyLine = document.createElement("span");
-                greyLine.classList.add("greyspan");
-                figure.appendChild(".span");
-                console.log(greyLine); */
-
-        /*     const figCaption = document.createElement("figCaption");
-            figCaption.textContent = projects[i].title;
-            figure.appendChild(figCaption); */
-        const trashIcone = document.createElement("i");
-        trashIcone.classList.add("fa-solid", "fa-trash-can");
-        figure.appendChild(trashIcone);
-    }
-}
-
-
-
-
-
-//supprimer les boutons catégories
-/* function btnCategories{
-    if (modal === true) { classList.add(".hidestyle") } else { classList.remove(".hidestyle") }
-}
-btnCategories() */
-
-/*     const filterContainer = document.querySelector("filter_container >.button");
-filterContainer.classList.remove("filter_container > .button");
-filterContainer.classList.add("filter_container > .button--hiden");
-console.log(filterContainer);
- 
-}
-*/
-
-
-
-
-///autre version
-
-// Activer les écouteurs sur le bouton et la modal
-/*     btnModifier.addEventListener("click", showModal);
+    // Activer les écouteurs sur le bouton et la modal
+    btnModifier.addEventListener("click", showModal);
     function showModal() {
         modale.classList.remove("editor__modal");
         modale.classList.add("editor__modal--visible");
@@ -213,10 +76,15 @@ console.log(filterContainer);
         titleModal.classList.add("editor__modal--title--visible");
         modalebtn.classList.remove("editor__modal--btn--modif");
         modalebtn.classList.add("editor__modal--btn--modif--visible");
-    }; */
+    };
 
+    //supprimer les boutons catégories
+    const filterContainer = document.querySelector("filter_container >.button");
+    filterContainer.classList.remove("filter_container > .button");
+    filterContainer.classList.add("filter_container > .button--hiden");
+    console.log(filterContainer);
 
-
+}
 
 
 //RECUPERATION DES DONNEES DEPUIS SWAGGER
