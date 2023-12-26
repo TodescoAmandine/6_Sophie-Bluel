@@ -136,7 +136,7 @@ table {
 
 /** end reset css**/
 body {
-	max-width: 1140px;
+	/* max-width: 1140px; */
 	/* margin: auto; */
 	font-family: 'Work Sans';
 	font-size: 14px;
@@ -172,7 +172,6 @@ header {
 	position: absolute;
 	display: block;
 	width: 100%;
-	max-width: 1440px;
 	height: 50px;
 	background-color: black;
 }
@@ -303,11 +302,11 @@ header {
 
 /*****ANIMATION MODAL*****/
 .modal[aria-hidden="true"] {
-	animation: fadeOut;
+	animation: fadeOut .5s both;
 }
 
 .modal[aria-hidden="true"] .modal-wrapper {
-	animation: slideToBottom;
+	animation: slideToBottom .5s both;
 }
 
 @keyframes fadeIn {
@@ -323,10 +322,12 @@ header {
 @keyframes fadeOut {
 	from {
 		opacity: 1;
+		display: flex;
 	}
 
 	to {
 		opacity: 0;
+		display: flex;
 	}
 }
 
@@ -343,15 +344,17 @@ header {
 @keyframes slideToBottom {
 	from {
 		transform: translateY(0px);
+		display: flex;
 	}
 
 	to {
 		transform: translateY(50px);
+		display: flex;
 	}
 }
 
 *:focus {
-	box-shadow: 0 0 10 black;
+	box-shadow: 0 0 10px black;
 }
 
 

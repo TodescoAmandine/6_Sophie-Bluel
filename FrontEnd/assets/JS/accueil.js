@@ -68,10 +68,9 @@ function enableAdmin() {
     btnModifier.classList.add("editor--btn--modifier--visible");
     inconeModifier.classList.remove("editor_icone--modifier");
     inconeModifier.classList.add("editor_icone--modifier--visible");
-    const filterCont = document.querySelector("filter_contenair.button");
-    console.log(filterCont);
-    /*     filterCont.classList.remove(".filter_contenair", "button")
-        filterCont.classList.add(".filter_container", "button--hidden"); */
+    /*     const filterButtons = document.querySelector("filter_container");
+        console.log(filterButtons); */
+
 }
 
 /*************MODAL**************/
@@ -79,7 +78,6 @@ let modal = null;
 const focusableSelector = 'button, a,input, textearea';
 let focusables = [];
 let previouslyFocusedElement = null;
-
 
 
 const openModal = function (e) {
@@ -183,19 +181,7 @@ function gestionGallery(projects) {
 
 
 
-//supprimer les boutons catégories
-/* function btnCategories{
-    if (modal === true) { classList.add(".hidestyle") } else { classList.remove(".hidestyle") }
-}
-btnCategories() */
 
-/*     const filterContainer = document.querySelector("filter_container >.button");
-filterContainer.classList.remove("filter_container > .button");
-filterContainer.classList.add("filter_container > .button--hiden");
-console.log(filterContainer);
- 
-}
-*/
 
 
 
@@ -255,6 +241,7 @@ async function getCategories() {
     const categories = await reponse.json();
     return categories;
 }
+
 
 function afficherCategories(categories) {
     const filterContainer = document.createElement('div');
