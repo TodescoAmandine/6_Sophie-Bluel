@@ -33,7 +33,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li id="loginLink">login</li>
+			<a href="./login.html"><li ref id="loginLink">login</li></a>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -57,14 +57,50 @@
 		<a class ="js-modal editor--btn--modifier" href="#modal1">
 			<i class="fa-solid fa-pen-to-square editor_icone--modifier "></i>Modifier</a>
 
+<!---------------MODAL--------------->
 			<aside id="modal1"class="modal" aria-hidden="true"aria-labelledby="titlemodal" style="display: none;">
-				<div class="modal-wrapper js-modal-stop">
+<!---------------MODAL ORIGIN--------------->
+				<div class="modal-wrapper js-modal-stop" id="modal--origin" aria-hidden="true" >			
 					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
 					<h3 id="titlemodal">Gallerie Photos</h3>
 					<div class="modal_gallery"></div>
+					<div class="greybar"></div>
 					<button id="btn_ajout">Ajouter une photo</button>
+				</div>	
+<!---------------MODAL AJOUT PROJETS--------------->			
+				<div class="modal-wrapper js-modal-stop" id="modal--ajout" aria-hidden="true">
+					<button class="js-arrow"><i class="fa-solid fa-arrow-left"></i></button>			
+					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
+					<h3 id="titlemodal--ajout">Ajout Photos</h3>
+
+					
+					<div class="cadre-ajouter--photo">						
+						<button id="btn--ajouterphoto1"><i class="fa-regular fa-image"></i></button>
+						<button id="btn--ajouterphoto2">+ Ajouter une photo</button>
+						<p id="p-ajout">jpg, png : 4mo max</p>
+					</div>
+					<form>
+						<label id="titre-label" for="titre">Titre</label>
+						<input type="text" id="titre" name="titre" placeholder="" >
+
+						<label id="categorie-label" for="categorie-label">Catégorie</label>
+						<select id="categorie">
+							<option value=""></option>
+							<option value="Objets">Objets</option>
+							<option value="Appartement">Appartement</option>
+							<option value="Hôtels & restaurants">Hôtels & restaurants</option>
+						</select>
+					</form>
+
+					<div class="greybar"></div>
+					<button id="btn_ajout2">Valider</button>
+
 				</div>
+
 			</aside>
+
+
+
 	</div>
 		<div class="gallery">
 		</div>
