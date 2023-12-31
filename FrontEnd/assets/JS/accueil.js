@@ -65,7 +65,7 @@ const openModal = function (e) {
     modal.setAttribute("aria-modal", "true");
     modal.addEventListener("click", closeModal);
     modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
-    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+    modal.querySelectorAll(".js-modal-stop").forEach(e => { e.addEventListener("click", stopPropagation); });
 
 
     // AFFICHAGE DE LA GALERIE DANS LA MODALE //
@@ -86,15 +86,25 @@ const openModal = function (e) {
         modalAjout.style.display = null;
         modalAjout.removeAttribute("aria-hidden");
         modalAjout.setAttribute("aria-modal", "true");
+        //FLECHE RETOUR//
+        const arrowBack = document.querySelector(".js-arrow");
+        arrowBack.addEventListener("click", () => {
+            modalAjout.style.display = "none";
+            modalAjout.setAttribute("aria-hidden", "true");
+            modalAjout.removeAttribute("aria-modal", "true");
+            modalOrigin.style.display = null;
+            modalOrigin.removeAttribute("aria-hidden", "true");
+            modalOrigin.setAttribute("aria-modal", "true");
 
+        })
     });
 
 
 
 
 }
-const modalAjout = document.getElementById("modal--ajout")
-const modalOrigin = document.getElementById("modal--origin")
+const modalAjout = document.getElementById("modal--ajout");
+const modalOrigin = document.getElementById("modal--origin");
 
 
 
@@ -174,22 +184,6 @@ function afficherGallery(projects, filter = null, edit = false) {
     }
 }
 
-async function deleteProject(projectId) {
-    return await fetch('http://localhost:5678/api/works/' + projectId, {
-        method: 'DELETE',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-}
-async function ajoutProject(projectId) {
-    return await fetch('http://localhost:5678/api/works/' + projectId, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-}
 
 
 
@@ -207,7 +201,7 @@ async function getCategories() {
 }
 
 
-/* Afficher les filtres/catégories dans le dom */
+/* Afficher les filtres/catégories dans le DOM */
 function afficherCategories(categories) {
     const filterContainer = document.createElement('div');
     filterContainer.classList.add('filter_container');
@@ -243,7 +237,6 @@ function afficherCategories(categories) {
             // Ajoute la classe active au bouton actuellement cliqué
             filter.classList.add('active');
 
-
             filterGallery(category.name);
 
         });
@@ -251,7 +244,7 @@ function afficherCategories(categories) {
     })
 }
 
-/* Filter la galerie en fonction du type cliqué 'Tous', 'OBJETS' ETC*/
+/* Filrer la galerie en fonction du type cliqué 'Tous', 'OBJETS' ETC*/
 function filterGallery(filter) {
     getProjects().then((projects) => {
         afficherGallery(projects, filter);
@@ -260,8 +253,74 @@ function filterGallery(filter) {
 
 main();
 
+async function deleteProject(projectId) {
+    return await fetch('http://localhost:5678/api/works/' + projectId, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        id: projectId,
+    });
+}
+async function ajoutProject(projectId) {
+    if (!categorieAjout.value || !titreAjout.value || !preview.src) {
+        /*         innerHTML = "Veuillez remplir tous les champs et séléctionner une image" */
+        console.log('erreur');
+        return;
+    }
+    return await fetch('http://localhost:5678/api/works/' + projectId, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            image: preview.src,
+            title: titreAjout.value,
+            category: (int)(categorieAjout.value),
+        })
+    });
+}
 
 
 
 
+/*BOUTON AJOUTER UNE PHOTO*/
 
+/*récupération du DOM*/
+const btnAjout1 = document.getElementById("btn--ajouterphoto1");
+const btnAjout2 = document.getElementById("btn--ajouterphoto2");
+const btnajoutInput = document.getElementById("file");
+const preview = document.getElementById("preview");
+const pAjout = document.getElementById("p-ajout");
+const titreAjout = document.getElementById("titre");
+const categorieAjout = document.getElementById("categorie");
+const btnValider = document.getElementById("btn--valider");
+
+
+btnAjout2.addEventListener("click", () => {
+    btnajoutInput.click();
+
+});
+
+btnAjout1.addEventListener("click", () => {
+    btnajoutInput.click();
+});
+
+btnajoutInput.addEventListener("change", () => {
+    const reader = new FileReader();
+    reader.readAsDataURL(btnajoutInput.files[0]);
+    reader.onload = () => {
+        preview.src = reader.result;
+        pAjout.style.display = "none";
+        btnAjout2.style.display = "none";
+    };
+
+});
+
+btnValider.addEventListener("click", () => {
+    ajoutProject().then((response) => {
+        if (response.ok) {
+            console.log('ok');
+        }
+    })
+});

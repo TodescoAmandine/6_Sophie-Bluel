@@ -58,7 +58,7 @@
 			<i class="fa-solid fa-pen-to-square editor_icone--modifier "></i>Modifier</a>
 
 <!---------------MODAL--------------->
-			<aside id="modal1"class="modal" aria-hidden="true"aria-labelledby="titlemodal" style="display: none;">
+			<aside id="modal1" class="modal" aria-hidden="true"aria-labelledby="titlemodal" style="display: none;">
 <!---------------MODAL ORIGIN--------------->
 				<div class="modal-wrapper js-modal-stop" id="modal--origin" aria-hidden="true" >			
 					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
@@ -69,31 +69,31 @@
 				</div>	
 <!---------------MODAL AJOUT PROJETS--------------->			
 				<div class="modal-wrapper js-modal-stop" id="modal--ajout" aria-hidden="true">
-					<button class="js-arrow"><i class="fa-solid fa-arrow-left"></i></button>			
+					<a href="#modal--origin" class="js-arrow"><i class="fa-solid fa-arrow-left"></i></a>			
 					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
 					<h3 id="titlemodal--ajout">Ajout Photos</h3>
-
-					
+					<!--BOUTONS AJOUT PREVIEW-->
 					<div class="cadre-ajouter--photo">						
-						<button id="btn--ajouterphoto1"><i class="fa-regular fa-image"></i></button>
+						<button id="btn--ajouterphoto1"><img src="./assets/images/iconeimage.png" alt="" id="preview"></button>
 						<button id="btn--ajouterphoto2">+ Ajouter une photo</button>
+						<input type="file" id="file" name="file" accept="image/png, image/jpeg" >
 						<p id="p-ajout">jpg, png : 4mo max</p>
 					</div>
 					<form>
 						<label id="titre-label" for="titre">Titre</label>
 						<input type="text" id="titre" name="titre" placeholder="" >
 
-						<label id="categorie-label" for="categorie-label">Catégorie</label>
+						<label id="categorie-label" for="categorie">Catégorie</label>
 						<select id="categorie">
 							<option value=""></option>
-							<option value="Objets">Objets</option>
-							<option value="Appartement">Appartement</option>
-							<option value="Hôtels & restaurants">Hôtels & restaurants</option>
+							<option value="1">Objets</option>
+							<option value="2">Appartement</option>
+							<option value="3">Hôtels & restaurants</option>
 						</select>
 					</form>
 
 					<div class="greybar"></div>
-					<button id="btn_ajout2">Valider</button>
+					<button type="submit" id="btn_valider">Valider</button>
 
 				</div>
 

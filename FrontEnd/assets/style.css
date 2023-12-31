@@ -363,6 +363,19 @@ header {
 	color: white;
 }
 
+#file {
+	opacity: 0;
+	width: 0.1px;
+	height: 0.1px;
+}
+
+#preview {
+	max-height: 100%;
+	object-fit: cover;
+	max-width: 100%;
+	max-height: 100%;
+}
+
 /**********ELEMENTS MODAL AJOUT**********/
 .js-arrow {
 	position: absolute;
@@ -386,11 +399,13 @@ header {
 }
 
 #btn--ajouterphoto1 {
-	color: #CBD6DC;
 	stroke-width: 0;
 	font-size: 60px;
 	border: none;
-	margin-top: 10px;
+	max-width: 100%;
+	max-height: 100%;
+	background: transparent;
+
 }
 
 #btn--ajouterphoto2 {
@@ -462,7 +477,7 @@ header {
 	justify-content: center;
 }
 
-#btn_ajout2 {
+#btn_valider {
 	position: absolute;
 	top: 85%;
 	width: 237px;
