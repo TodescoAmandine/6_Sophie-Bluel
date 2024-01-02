@@ -197,6 +197,16 @@ function afficherGallery(projects, filter = null, edit = false) {
             figCaption.textContent = projects[i].title;
             figure.appendChild(figCaption);
         }
+        //----------AJOUTER UNE PHOTO DANS LA GALLERY----------//
+        ajoutProject(projects[i].id).then((response) => {
+            if (response.ok) {
+                getProjects().then((projects) => {
+                    afficherGallery(projects);
+                });
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 }
 
