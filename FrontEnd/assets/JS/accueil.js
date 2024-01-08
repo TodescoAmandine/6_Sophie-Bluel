@@ -3,22 +3,20 @@ const galleryElem = document.querySelector(".gallery");
 const portfolioElem = document.querySelector("#portfolio");
 
 
-
-//RECUPERATION DU DOM --- MODALE
-
 //DOM- - BANNER
 let bannerVisible = document.querySelector(".editor__banner");
 let token = '';
+
 //DOM--avant modale
 const btnModifier = document.querySelector('.editor--btn--modifier');
 const inconeModifier = document.querySelector(".editor_icone--modifier ")
+
 //DOM--MODAL ajout
 const btnAjout = document.getElementById("btn_ajout");
-
 const modalAjout = document.getElementById("modal--ajout");
 const modalOrigin = document.getElementById("modal--origin");
-
-
+/* console.log("click", btnAjout);
+ */
 /*-----------------
     FONCTION main
 ------------------*/
@@ -28,6 +26,7 @@ function main() {
         token = JSON.parse(window.localStorage.getItem('userToken')).token
         enableAdmin();
         document.querySelector(".js-modal").addEventListener("click", openModal);
+
     }
 
     getProjects().then((projects) => {
@@ -40,7 +39,10 @@ function main() {
         });
     }
 }
-
+/* document.querySelector(".js-modal").addEventListener("click", openModal);
+ */
+/* document.addEventListener("DOMContentLoaded", main);
+ */
 /*-----------------
     MODE ADMIN
 ------------------*/
@@ -54,25 +56,27 @@ function enableAdmin() {
     inconeModifier.classList.remove("editor_icone--modifier");
     inconeModifier.classList.add("editor_icone--modifier--visible");
 
-    const filterButtons = document.querySelector(".filter_container");
-    console.log(filterButtons);
-
-}
+/*     const filterButtons = document.querySelector(".filter_container");
+ */}
 /* --------------
       MODAL
 ----------------*/
 let modal = '';
 
+
 const openModal = function (e) {
     e.preventDefault();
+
     //----------Afficher modal----------//
     modal = document.querySelector(e.target.getAttribute("href"));
+    /*     console.log("href", e.target.getAttribute("href"));*/
     modal.style.display = null;
     modal.removeAttribute("aria-hidden");
     modal.setAttribute("aria-modal", "true");
     modal.addEventListener("click", closeModal);
     modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
     modal.querySelectorAll(".js-modal-stop").forEach(e => { e.addEventListener("click", stopPropagation); });
+
 
 
     //----------AFFICHAGE DE LA GALERIE DANS LA MODALE----------//
@@ -84,6 +88,7 @@ const openModal = function (e) {
     modalAjout.style.display = "none";
     modalAjout.setAttribute("aria-hidden", "true");
     modalAjout.removeAttribute("aria-modal", "true");
+
     //MODALE ORIGIN  SUPP AU CLIC//
     btnAjout.addEventListener("click", () => {
         modalOrigin.style.display = "none";
@@ -93,8 +98,10 @@ const openModal = function (e) {
         modalAjout.style.display = null;
         modalAjout.removeAttribute("aria-hidden");
         modalAjout.setAttribute("aria-modal", "true");
-        /*         modalAjout.setAttribute("closeModal");
-         */
+        modalAjout.querySelector(".js-modal-close").addEventListener("click", closeModal);
+
+
+
         //FLECHE RETOUR//
         const arrowBack = document.querySelector(".js-arrow");
         arrowBack.addEventListener("click", () => {
@@ -105,33 +112,35 @@ const openModal = function (e) {
             modalOrigin.removeAttribute("aria-hidden", "true");
             modalOrigin.setAttribute("aria-modal", "true");
         })
+
+        addProjectInit();
     });
 }
 
-
+/* const closeModal = () => {
+    const modal = document.querySelector(".modal");
+    modal.remove();
+} */
 
 //--------FERMER MODAL----------//
 const closeModal = function (e) {
     e.preventDefault();
-    modal.style.display = "none";
+/*     modal = null;
+ */    modal.style.display = "none";
     modal.setAttribute("aria-hidden", "true");
     modal.removeAttribute("aria-modal", "true");
     modal.removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
 }
+console.log(modal);
+
+
 
 ///FONCTION pour garder l'evenement au clic : close uniquement sur le bouton et en dehors de la fenêtre//
 const stopPropagation = function (e) {
     e.stopPropagation();
 }
-
-
-
-
-
-
-
 
 /*
 * ------------
@@ -197,22 +206,8 @@ function afficherGallery(projects, filter = null, edit = false) {
             figCaption.textContent = projects[i].title;
             figure.appendChild(figCaption);
         }
-        //----------AJOUTER UNE PHOTO DANS LA GALLERY----------//
-        ajoutProject(projects[i].id).then((response) => {
-            if (response.ok) {
-                getProjects().then((projects) => {
-                    afficherGallery(projects);
-                });
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
     }
 }
-
-
-
-
 
 /*
 * ------------
@@ -300,70 +295,91 @@ async function deleteProject(projectId) {
 /*-----------------------
      AJOUT PROJECT
 -------------------------*/
-async function ajoutProject() {
-    if (!categorieAjout.value || !titreAjout.value || !preview.src) {
 
-        console.log('erreur');
-        return;
-    }
-    return await fetch('http://localhost:5678/api/works/' + projectId, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            image: preview.src,
-            title: titreAjout.value,
-            category: (int)(categorieAjout.value),
-        })
+
+function addProjectInit() {
+
+    //--------récupération du DOM--------//
+    const btnAjout1 = document.getElementById("btn--ajouterphoto1");
+    const btnAjout2 = document.getElementById("btn--ajouterphoto2");
+    const btnajoutInput = document.getElementById("file");
+    const preview = document.getElementById("preview");
+    const pAjout = document.getElementById("p-ajout");
+    const titreAjout = document.getElementById("titre");
+    const categorieAjout = document.getElementById("categorie");
+    const btnValider = document.getElementById("btn_valider");
+    const messageError2 = document.getElementById("error2");
+
+    btnAjout2.addEventListener("click", () => {
+        btnajoutInput.click();
+
+    });
+
+    btnAjout1.addEventListener("click", () => {
+        btnajoutInput.click();
+    });
+
+    //--------BOUTON AJOUTER UNE PHOTO AVEC PREVIEW--------//
+    btnajoutInput.addEventListener("change", () => {
+        const reader = new FileReader();
+        reader.readAsDataURL(btnajoutInput.files[0]);
+        reader.onload = () => {
+            preview.src = reader.result;
+            pAjout.style.display = "none";
+            btnAjout2.style.display = "none";
+        };
+
+    });
+
+    //----------BOUTON VALIDER-----------//
+    /*     console.log(btnValider) */
+    btnValider.addEventListener("click", (e) => {
+        e.preventDefault();
+        messageError2.textContent = '';
+        ajoutProject(categorieAjout, titreAjout, btnajoutInput).then((response) => {
+            if (response.ok) {
+                getProjects().then((projects) => {
+                    afficherGallery(projects);
+                });
+                closeModal()
+
+            }
+        }).catch((error) => {
+            console.log(error);
+            messageError2.textContent = "Merci de renseigner tous les champs";
+
+        });
     });
 }
 
 
+async function ajoutProject(categorieAjout, titreAjout, file) {
+    console.log(categorieAjout.value, titreAjout.value)
+    console.log(file.files[0])
 
 
-//---------BOUTON AJOUTER UNE PHOTO---------//
 
-//--------récupération du DOM--------//
-const btnAjout1 = document.getElementById("btn--ajouterphoto1");
-const btnAjout2 = document.getElementById("btn--ajouterphoto2");
-const btnajoutInput = document.getElementById("file");
-const preview = document.getElementById("preview");
-const pAjout = document.getElementById("p-ajout");
-const titreAjout = document.getElementById("titre");
-const categorieAjout = document.getElementById("categorie");
-const btnValider = document.getElementById("btn--valider");
+    console.log(!categorieAjout.value, !titreAjout.value, file.files[0] === undefined)
+    if (!categorieAjout.value || !titreAjout.value || file.files[0] === undefined) {
+        console.log('erreur');
 
 
-btnAjout2.addEventListener("click", () => {
-    btnajoutInput.click();
+        return;
+    }
 
-});
+    const formData = new FormData();
+    formData.append('image', file.files[0]);
+    formData.append('title', `${titreAjout.value}`)
+    formData.append('category', parseInt(categorieAjout.value))
 
-btnAjout1.addEventListener("click", () => {
-    btnajoutInput.click();
-});
-//--------BOUTON AJOUTER UNE PHOTO AVEC PREVIEW--------//
-btnajoutInput.addEventListener("change", () => {
-    const reader = new FileReader();
-    reader.readAsDataURL(btnajoutInput.files[0]);
-    reader.onload = () => {
-        preview.src = reader.result;
-        pAjout.style.display = "none";
-        btnAjout2.style.display = "none";
-    };
 
-});
-//----------BOUTON VALIDER-----------//
-btnValider.addEventListener("submit", (e) => {
-    e.preventDefault();
-    ajoutProject().then((response) => {
-        if (response.ok) {
-            getProjects().then((projects) => {
-                afficherGallery(projects);
-            });
-        }
-    }).catch((error) => {
-        console.log(error);
+    return await fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: formData
     });
-});
+}
+
+

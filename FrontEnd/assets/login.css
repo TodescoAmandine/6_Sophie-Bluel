@@ -75,13 +75,11 @@ input:hover[type="submit"] {
     vertical-align: baseline;
 }
 
-/* span {
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s;
-} */
-
 #error {
     visibility: visible;
     opacity: 1;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: #B1663C;
 }
