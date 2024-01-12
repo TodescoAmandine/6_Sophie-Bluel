@@ -18,13 +18,6 @@
 	<div class="editor__banner">
 		<a class="editor__banner--btn" href="#"><i id="editor__banner_icone" class="fa-solid fa-pen-to-square"></i>mode édition</a>
 	</div>
-<!-- 	<div class="editor__modal">
-		<div class="editor__modal--window">
-		
-			<button class="editor__modal--btn--modif"><i class="fa-solid fa-xmark"></i></button>
-			<h3 class="editor__modal--title">Gallerie Photos</h3>
-		</div>
-	</div> -->
 </div>
 <header>
 
@@ -58,9 +51,9 @@
 			<i class="fa-solid fa-pen-to-square editor_icone--modifier "></i>Modifier</a>
 
 <!---------------MODAL--------------->
-			<aside id="modal1" class="modal" aria-hidden="true"aria-labelledby="titlemodal" style="display: none;">
+			<aside id="modal1" class="modal" aria-labelledby="titlemodal" style="display: none;"> <!--aria-hidden="true"-->	
 <!---------------MODAL ORIGIN--------------->
-				<div class="modal-wrapper js-modal-stop" id="modal--origin" aria-hidden="true" >			
+				<div class="modal-wrapper js-modal-stop" id="modal--origin" >	<!--aria-hidden="true"-->		
 					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
 					<h3 id="titlemodal">Gallerie Photos</h3>
 					<div class="modal_gallery"></div>
@@ -68,7 +61,7 @@
 					<button id="btn_ajout">Ajouter une photo</button>
 				</div>	
 <!---------------MODAL AJOUT PROJETS--------------->			
-				<div class="modal-wrapper js-modal-stop" id="modal--ajout" aria-hidden="true">
+				<div class="modal-wrapper js-modal-stop" id="modal--ajout" > <!--aria-hidden="true"-->
 					<a href="#modal--origin" class="js-arrow"><i class="fa-solid fa-arrow-left"></i></a>			
 					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
 					<h3 id="titlemodal--ajout">Ajout Photos</h3>

@@ -15,8 +15,7 @@ const inconeModifier = document.querySelector(".editor_icone--modifier ")
 const btnAjout = document.getElementById("btn_ajout");
 const modalAjout = document.getElementById("modal--ajout");
 const modalOrigin = document.getElementById("modal--origin");
-/* console.log("click", btnAjout);
- */
+
 /*-----------------
     FONCTION main
 ------------------*/
@@ -26,7 +25,6 @@ function main() {
         token = JSON.parse(window.localStorage.getItem('userToken')).token
         enableAdmin();
         document.querySelector(".js-modal").addEventListener("click", openModal);
-
     }
 
     getProjects().then((projects) => {
@@ -39,10 +37,7 @@ function main() {
         });
     }
 }
-/* document.querySelector(".js-modal").addEventListener("click", openModal);
- */
-/* document.addEventListener("DOMContentLoaded", main);
- */
+
 /*-----------------
     MODE ADMIN
 ------------------*/
@@ -55,9 +50,8 @@ function enableAdmin() {
     btnModifier.classList.add("editor--btn--modifier--visible");
     inconeModifier.classList.remove("editor_icone--modifier");
     inconeModifier.classList.add("editor_icone--modifier--visible");
+}
 
-/*     const filterButtons = document.querySelector(".filter_container");
- */}
 /* --------------
       MODAL
 ----------------*/
@@ -66,17 +60,20 @@ let modal = '';
 
 const openModal = function (e) {
     e.preventDefault();
+    //on ouvre le aside//
+    const overlay = document.querySelector('#modal1')
 
     //----------Afficher modal----------//
-    modal = document.querySelector(e.target.getAttribute("href"));
-    /*     console.log("href", e.target.getAttribute("href"));*/
-    modal.style.display = null;
-    modal.removeAttribute("aria-hidden");
-    modal.setAttribute("aria-modal", "true");
-    modal.addEventListener("click", closeModal);
+    // si le click contient modal alors on close la modal//
+    overlay.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e)
+        }
+    })
+    modal = document.querySelector(e.currentTarget.getAttribute("href"));
+    modal.style.display = 'flex';
+    //btn croix Fermer modal//
     modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
-    modal.querySelectorAll(".js-modal-stop").forEach(e => { e.addEventListener("click", stopPropagation); });
-
 
 
     //----------AFFICHAGE DE LA GALERIE DANS LA MODALE----------//
@@ -84,57 +81,37 @@ const openModal = function (e) {
         afficherGallery(projects, null, true);
 
     });
+
     //MODAL AJOUT CACHé//
     modalAjout.style.display = "none";
-    modalAjout.setAttribute("aria-hidden", "true");
-    modalAjout.removeAttribute("aria-modal", "true");
 
     //MODALE ORIGIN  SUPP AU CLIC//
     btnAjout.addEventListener("click", () => {
         modalOrigin.style.display = "none";
-        modalOrigin.setAttribute("aria-hidden", "true");
-        modalOrigin.removeAttribute("aria-modal", "true");
         // MODAL AJOUT AFFICHé//
-        modalAjout.style.display = null;
-        modalAjout.removeAttribute("aria-hidden");
-        modalAjout.setAttribute("aria-modal", "true");
+        modalAjout.style.display = 'flex';
+        //btn croix Fermer modal//
         modalAjout.querySelector(".js-modal-close").addEventListener("click", closeModal);
-
 
 
         //FLECHE RETOUR//
         const arrowBack = document.querySelector(".js-arrow");
         arrowBack.addEventListener("click", () => {
             modalAjout.style.display = "none";
-            modalAjout.setAttribute("aria-hidden", "true");
-            modalAjout.removeAttribute("aria-modal", "true");
-            modalOrigin.style.display = null;
-            modalOrigin.removeAttribute("aria-hidden", "true");
-            modalOrigin.setAttribute("aria-modal", "true");
+            modalOrigin.style.display = 'flex';
         })
 
         addProjectInit();
     });
 }
 
-/* const closeModal = () => {
-    const modal = document.querySelector(".modal");
-    modal.remove();
-} */
-
 //--------FERMER MODAL----------//
 const closeModal = function (e) {
-    e.preventDefault();
-/*     modal = null;
- */    modal.style.display = "none";
-    modal.setAttribute("aria-hidden", "true");
-    modal.removeAttribute("aria-modal", "true");
+    modal.style.display = "none";
+    modalOrigin.style.display = 'flex'
     modal.removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
-    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
 }
-console.log(modal);
-
 
 
 ///FONCTION pour garder l'evenement au clic : close uniquement sur le bouton et en dehors de la fenêtre//
@@ -200,8 +177,7 @@ function afficherGallery(projects, filter = null, edit = false) {
             });
 
             figure.appendChild(trashIcone);
-/*             figure.appendChild(messageConfirmSupp);
- */        } else {
+        } else {
             const figCaption = document.createElement("figCaption");
             figCaption.textContent = projects[i].title;
             figure.appendChild(figCaption);
@@ -310,6 +286,14 @@ function addProjectInit() {
     const btnValider = document.getElementById("btn_valider");
     const messageError2 = document.getElementById("error2");
 
+    // Reset du formulaire
+    preview.src = './assets/images/iconeimage.png';
+    titreAjout.value = '';
+    categorieAjout.value = 0;
+    btnAjout2.style.display = 'block';
+    pAjout.style.display = "block";
+
+
     btnAjout2.addEventListener("click", () => {
         btnajoutInput.click();
 
@@ -332,41 +316,31 @@ function addProjectInit() {
     });
 
     //----------BOUTON VALIDER-----------//
-    /*     console.log(btnValider) */
     btnValider.addEventListener("click", (e) => {
         e.preventDefault();
         messageError2.textContent = '';
-        ajoutProject(categorieAjout, titreAjout, btnajoutInput).then((response) => {
-            if (response.ok) {
-                getProjects().then((projects) => {
-                    afficherGallery(projects);
-                });
-                closeModal()
+        if (!categorieAjout.value || !titreAjout.value || btnajoutInput.files[0] === undefined) {
+            console.log('erreur');
+            messageError2.textContent = 'Remplissez tous les champs';
+        } else {
+            ajoutProject(categorieAjout, titreAjout, btnajoutInput).then((response) => {
+                console.log(response)
+                if (response.status === 201) {
+                    getProjects().then((projects) => {
+                        afficherGallery(projects);
+                    });
+                    closeModal()
 
-            }
-        }).catch((error) => {
-            console.log(error);
-            messageError2.textContent = "Merci de renseigner tous les champs";
-
-        });
+                } else {
+                    messageError2.textContent = "Erreur lors de l'ajout";
+                }
+            });
+        }
     });
 }
 
 
 async function ajoutProject(categorieAjout, titreAjout, file) {
-    console.log(categorieAjout.value, titreAjout.value)
-    console.log(file.files[0])
-
-
-
-    console.log(!categorieAjout.value, !titreAjout.value, file.files[0] === undefined)
-    if (!categorieAjout.value || !titreAjout.value || file.files[0] === undefined) {
-        console.log('erreur');
-
-
-        return;
-    }
-
     const formData = new FormData();
     formData.append('image', file.files[0]);
     formData.append('title', `${titreAjout.value}`)
