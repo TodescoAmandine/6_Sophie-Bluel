@@ -393,15 +393,10 @@ header {
 }
 
 .modal_gallery {
-	/* width: 100%; */
 	display: grid;
-	/* 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
- */
 	grid-template-columns: 76px 76px 76px 76px 76px;
 	column-gap: 8px;
 	grid-row-gap: 20px;
-	/* 	padding: 30px 20px;
-*/
 	padding: 40px 20px;
 }
 
@@ -410,8 +405,6 @@ header {
 }
 
 #btn_ajout {
-	/* 	position: absolute;
-	top: 85%; */
 	width: 237px;
 	height: 36px;
 	color: #1D6154;
@@ -435,7 +428,7 @@ header {
 }
 
 
-/* ID FILE opacity 0 car on ne veut pas voir le bouton, mais on veut pouvoir cliquer dessus. De base j'ai utilisé un bouton et le file n'accepet que les input*/
+/* ID FILE opacity 0 car on ne veut pas voir le bouton, mais on veut pouvoir cliquer dessus. De base j'ai utilisé un bouton et le file n'accepte que les input*/
 #file {
 	opacity: 0;
 	width: 0.1px;
@@ -568,15 +561,17 @@ header {
 	border: none;
 }
 
-#btn_ajout2:hover {
+#btn_valider:hover {
 	background-color: #1D6154;
 	color: white;
 }
 
+
+
 #error2 {
 	visibility: visible;
 	opacity: 1;
-	margin: 20px 20px 0 0;
+	margin: 10px 20px 0 0;
 	text-align: center;
 	font-weight: 700;
 	color: #B1663C;
@@ -626,7 +621,10 @@ nav li {
 }
 
 li:hover {
-	color: #B1663C;
+	color: black;
+	font-family: Work Sans;
+	font-size: 16px;
+	font-weight: 700;
 }
 
 #introduction {
