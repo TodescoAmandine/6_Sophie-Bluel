@@ -185,7 +185,7 @@ header {
 	color: white;
 	text-decoration: none;
 	text-align: center;
-	font-family: work sans;
+	font-family: 'Work Sans';
 	font-weight: 400;
 	font-size: 16px;
 }
@@ -208,23 +208,24 @@ header {
 	visibility: visible;
 }
 
+.editor--btn--modifier--visible:hover {
+	visibility: visible;
+	font-weight: 700;
+}
 
-
-.editor_icone--modifier {
+/* .editor_icone--modifier {
 	visibility: hidden;
 	display: flex;
 	color: black;
 	font-size: 14px;
 	border-style: none;
-	margin-right: 10px;
-}
+	margin-right: 20px;
+} */
 
 .editor_icone--modifier--visible {
-	display: flex;
-	color: black;
-	font-size: 14px;
-	border-style: none;
+	visibility: visible;
 	margin-right: 10px;
+
 }
 
 /**********MODAL ELEMENTS PARTAGES**********/
@@ -246,13 +247,9 @@ header {
 	border-radius: 10px;
 	background-color: white;
 	width: 640px;
-	/* 	height: 688px;
- */
 	height: 90vh;
 	padding: 20px;
 	max-width: calc(100vh - 20px);
-	/* 	max-height: calc(100vh - 20px);
- */
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
@@ -300,7 +297,6 @@ header {
 	font-size: 20px;
 	right: 5%;
 	border-style: none;
-	position: absolute;
 	cursor: pointer;
 }
 
@@ -308,8 +304,6 @@ header {
 	width: 60%;
 	border-top: 2px solid #B3B3B3;
 }
-
-
 
 /**********ANIMATION MODAL**********/
 .modal[aria-hidden="true"] {
@@ -376,7 +370,7 @@ header {
 	display: flex;
 	justify-content: center;
 	margin-top: 40px;
-	font-family: work sans;
+	font-family: "Work Sans";
 	font-size: 26px;
 	font-weight: 400;
 	color: black;
@@ -386,7 +380,7 @@ header {
 	display: flex;
 	justify-content: center;
 	margin-top: 40px;
-	font-family: work sans;
+	font-family: "Work Sans";
 	font-size: 26px;
 	font-weight: 400;
 	color: black;
@@ -408,7 +402,7 @@ header {
 	width: 237px;
 	height: 36px;
 	color: #1D6154;
-	font-family: Syne;
+	font-family: "Syne";
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 700;
@@ -439,7 +433,6 @@ header {
 	max-height: 100%;
 	object-fit: cover;
 	max-width: 100%;
-	max-height: 100%;
 }
 
 /**********ELEMENTS MODAL AJOUT**********/
@@ -449,7 +442,6 @@ header {
 	font-size: 20px;
 	left: 5%;
 	border-style: none;
-	position: absolute;
 	cursor: pointer;
 }
 
@@ -479,7 +471,7 @@ header {
 	width: 170px;
 	height: 36px;
 	color: #306685;
-	font-family: Work sans;
+	font-family: "Work Sans";
 	font-size: 14px;
 	font-style: normal;
 	font-weight: 500;
@@ -496,7 +488,7 @@ header {
 }
 
 #p-ajout {
-	font-family: Work Sans;
+	font-family: "Work Sans";
 	font-weight: 400;
 	font-Size: 10px;
 	text-align: center;
@@ -514,7 +506,6 @@ header {
 #titre-label {
 	margin-left: 50px;
 }
-
 
 #categorie-label {
 	margin-left: 50px;
@@ -548,7 +539,7 @@ header {
 	width: 237px;
 	height: 36px;
 	color: white;
-	font-family: Syne;
+	font-family: "Syne";
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 700;
@@ -567,7 +558,6 @@ header {
 }
 
 
-
 #error2 {
 	visibility: visible;
 	opacity: 1;
@@ -578,7 +568,6 @@ header {
 }
 
 /*************************************/
-
 
 
 section {
@@ -622,7 +611,7 @@ nav li {
 
 li:hover {
 	color: black;
-	font-family: Work Sans;
+	font-family: "Work Sans";
 	font-size: 16px;
 	font-weight: 700;
 }
@@ -693,7 +682,7 @@ li:hover {
 .filter_container .button {
 	height: 37px;
 	color: #1D6154;
-	font-family: Syne;
+	font-family: "Syne";
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 700;
@@ -713,7 +702,7 @@ li:hover {
 	background-color: #1D6154;
 	height: 37px;
 	color: white;
-	font-family: Syne;
+	font-family: "Syne";
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 700;
@@ -794,24 +783,22 @@ input[type="submit"] {
 }
 
 input:hover[type="submit"] {
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
 	background-color: #0E2F28;
-	margin: 2em auto;
-	width: 180px;
-	text-align: center;
-	border-radius: 60px;
 }
 
-a {
+li a {
 	display: flex;
 	justify-content: center;
-	color: #3D3D3D;
-	font: inherit;
+	color: black;
+	font-family: "Work Sans";
 	font-weight: 500;
-	font-size: 14px;
+	font-size: 16px;
 	line-height: 16.42px;
+}
+
+li a:hover {
+	font-weight: 700;
+
 }
 
 footer nav ul {

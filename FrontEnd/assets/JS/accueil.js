@@ -9,7 +9,7 @@ let token = '';
 
 //DOM--avant modale
 const btnModifier = document.querySelector('.editor--btn--modifier');
-const inconeModifier = document.querySelector(".editor_icone--modifier ")
+const inconeModifier = document.querySelector(".editor_icone--modifier")
 
 //DOM--MODAL ajout
 const btnAjout = document.getElementById("btn_ajout");
@@ -55,11 +55,12 @@ function enableAdmin() {
 /* --------------
       MODAL
 ----------------*/
-let modal = '';
-
+/* let modal = '';
+ */
 
 const openModal = function (e) {
     e.preventDefault();
+
     //on ouvre le aside//
     const overlay = document.querySelector('#modal1')
 
@@ -67,7 +68,7 @@ const openModal = function (e) {
     // si le click contient modal alors on close la modal//
     overlay.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal')) {
-            closeModal(e)
+            closeModal()
         }
     })
     modal = document.querySelector(e.currentTarget.getAttribute("href"));
@@ -79,7 +80,6 @@ const openModal = function (e) {
     //----------AFFICHAGE DE LA GALERIE DANS LA MODALE----------//
     getProjects().then((projects) => {
         afficherGallery(projects, null, true);
-
     });
 
     //MODAL AJOUT CACHé//
@@ -106,17 +106,11 @@ const openModal = function (e) {
 }
 
 //--------FERMER MODAL----------//
-const closeModal = function (e) {
+const closeModal = function () {
     modal.style.display = "none";
     modalOrigin.style.display = 'flex'
     modal.removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
-}
-
-
-///FONCTION pour garder l'evenement au clic : close uniquement sur le bouton et en dehors de la fenêtre//
-const stopPropagation = function (e) {
-    e.stopPropagation();
 }
 
 /*
@@ -324,7 +318,6 @@ function addProjectInit() {
             messageError2.textContent = 'Remplissez tous les champs';
         } else {
             ajoutProject(categorieAjout, titreAjout, btnajoutInput).then((response) => {
-                console.log(response)
                 if (response.status === 201) {
                     getProjects().then((projects) => {
                         afficherGallery(projects);

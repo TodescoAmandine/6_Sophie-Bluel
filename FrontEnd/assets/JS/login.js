@@ -1,7 +1,6 @@
 //RECUPERATION DU DOM
 const userEmail = document.getElementById("email");
 const userPassword = document.getElementById("password");
-const btnSubmit = document.getElementById("submit");
 const form = document.getElementById("form");
 const messageError = document.getElementById("error");
 
@@ -13,15 +12,15 @@ async function postUser(user) {
         headers: { "Content-Type": "application/json" },
         body: user,
     }).then((res) => res.json())
-};
+}
 //RECUPERATION DU TOKEN
-
 
 function login() {
     checkIfUserIsLog()
     form.addEventListener("submit", (e) => {
         messageError.textContent = '';
         e.preventDefault();
+
         const data = {
             email: userEmail.value,
             password: userPassword.value
