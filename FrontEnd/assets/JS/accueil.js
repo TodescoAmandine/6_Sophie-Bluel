@@ -55,8 +55,6 @@ function enableAdmin() {
 /* --------------
       MODAL
 ----------------*/
-/* let modal = '';
- */
 
 const openModal = function (e) {
     e.preventDefault();
